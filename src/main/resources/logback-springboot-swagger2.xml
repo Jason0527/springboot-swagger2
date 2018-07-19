@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 定义属性：log日志文件路径 -->
+	<property name="log_dir" value="d:/springboot-swagger2/logs" />  
+	<!-- 定义属性：log日志文件最大保存天数 -->
+	<property name="maxHistory" value="30"/>
+	<!-- 打印到控制台 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%-5level] %d{HH:mm:ss.SSS} %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 打印到文件 -->
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 时间滚动策略 按天滚动   最多保存30天-->
+        <rollingPolicy  class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log_dir}/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+			<pattern>[%-5level] %d{HH:mm:ss.SSS} %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+    </appender>
+    
+	<!-- 指定sql打印级别   因为sql语句打印界别未debug，所以要想打印sql语句，此处的level必须小于等于debug-->
+	<!-- <logger name="com.jason.boot.dao" level="debug"
+		additivity="false">
+		<appender-ref ref="console" />
+	</logger> -->
+	
+	<root>
+		<level value="info" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</root>
+</configuration>
